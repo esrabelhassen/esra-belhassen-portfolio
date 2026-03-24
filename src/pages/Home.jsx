@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
-const PHOTO_URL = "https://via.placeholder.com/150x150/8B5CF6/FFFFFF?text=Esra";
+const PHOTO_URL = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgdmlld0JveD0iMCAwIDE1MCAxNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxNTAiIGhlaWdodD0iMTUwIiBmaWxsPSIjOEI1Q0Y2Ii8+Cjx0ZXh0IHg9Ijc1IiB5PSI4NSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE4IiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+RXNyYTwvdGV4dD4KPC9zdmc+";
 
 /* ─── PALETTE ─────────────────────────────────────── */
 const C = {
@@ -329,17 +329,18 @@ export default function Home() {
   const scrollTo = (id) => { document.getElementById(id)?.scrollIntoView({ behavior:"smooth" }); setMenuOpen(false); };
 
   useEffect(() => {
-    const handle = () => {
-      const found = navLinks.find(id => {
-        const el = document.getElementById(id);
-        if (!el) return false;
-        const r = el.getBoundingClientRect();
-        return r.top <= 100 && r.bottom > 100;
-      });
-      if (found) setActive(found);
-    };
-    window.addEventListener("scroll", handle);
-    return () => window.removeEventListener("scroll", handle);
+    // Temporarily disabled scroll handling for debugging
+    // const handle = () => {
+    //   const found = navLinks.find(id => {
+    //     const el = document.getElementById(id);
+    //     if (!el) return false;
+    //     const r = el.getBoundingClientRect();
+    //     return r.top <= 100 && r.bottom > 100;
+    //   });
+    //   if (found) setActive(found);
+    // };
+    // window.addEventListener("scroll", handle);
+    // return () => window.removeEventListener("scroll", handle);
   }, []);
 
   const filtered = filter === "All" ? PROJECTS : PROJECTS.filter(p => p.badge === filter);
