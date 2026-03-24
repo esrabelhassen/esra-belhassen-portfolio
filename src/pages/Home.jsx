@@ -346,6 +346,10 @@ export default function Home() {
 
   return (
     <div style={{ background:C.bg, color:C.white, fontFamily:"'Inter','Segoe UI',sans-serif", minHeight:"100vh", overflowX:"hidden", position:"relative" }}>
+      {/* TEMPORARY DEBUG: Add visible content */}
+      <div style={{ background: 'red', color: 'white', padding: '20px', fontSize: '24px', position: 'fixed', top: '10px', left: '10px', zIndex: 9999 }}>
+        DEBUG: React is working! If you see this, the app is mounting.
+      </div>
       <Particles />
 
       <style>{`
