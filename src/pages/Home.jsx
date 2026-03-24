@@ -319,13 +319,269 @@ function HeroVisual() {
 
 /* ─── MAIN ────────────────────────────────────────── */
 export default function Home() {
+  const [active, setActive]     = useState("home");
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [filter, setFilter]     = useState("All");
+
+  const navLinks     = ["home", "about", "skills", "projects", "certifications", "contact"];
+  const badgeFilters = ["All", "Founder", "AI Lead", "CV", "ML", "NLP", "Healthcare", "Fintech", "AI"];
+
+  const scrollTo = (id) => { document.getElementById(id)?.scrollIntoView({ behavior:"smooth" }); setMenuOpen(false); };
+
+  useEffect(() => {
+    const handle = () => {
+      const found = navLinks.find(id => {
+        const el = document.getElementById(id);
+        if (!el) return false;
+        const r = el.getBoundingClientRect();
+        return r.top <= 100 && r.bottom > 100;
+      });
+      if (found) setActive(found);
+    };
+    window.addEventListener("scroll", handle);
+    return () => window.removeEventListener("scroll", handle);
+  }, []);
+
+  const filtered = filter === "All" ? PROJECTS : PROJECTS.filter(p => p.badge === filter);
+
   return (
-    <div style={{ background: 'black', color: 'white', padding: '50px', fontSize: '24px' }}>
-      <h1>TEST: React is working!</h1>
-      <p>If you see this, the portfolio is loading correctly.</p>
-      <div style={{ background: 'red', padding: '20px', margin: '20px 0' }}>
-        This is a test component
-      </div>
+    <div style={{ background:C.bg, color:C.white, fontFamily:"'Inter','Segoe UI',sans-serif", minHeight:"100vh", overflowX:"hidden", position:"relative" }}>
+      <Particles />
+
+      {/* ── NAV ── */}
+      <nav style={{ position:"fixed", top:0, left:0, right:0, zIndex:100, background:`${C.bg}ee`, backdropFilter:"blur(10px)", borderBottom:`1px solid ${C.border}` }}>
+        <div style={{ maxWidth:1200, margin:"0 auto", padding:"0 5%", display:"flex", alignItems:"center", justifyContent:"space-between", height:70 }}>
+          <span style={{ fontFamily:"'Space Grotesk',sans-serif", fontSize:"1.5rem", fontWeight:700, background:`linear-gradient(90deg,${C.violet},${C.cyan})`, WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>esra.dev</span>
+          <div style={{ display:"flex", alignItems:"center", gap:32 }}>
+            {navLinks.map(link => (
+              <button key={link} onClick={() => scrollTo(link)} style={{
+                fontFamily:"'Fira Code',monospace", fontSize:".85rem", color:active === link ? C.cyan : C.muted,
+                background:"none", border:"none", cursor:"pointer", padding:"8px 0", transition:"color .3s",
+                textTransform:"uppercase", letterSpacing:".05em"
+              }}>
+                {link}
+              </button>
+            ))}
+          </div>
+        </div>
+      </nav>
+
+      {/* ── HERO ── */}
+      <section id="home" style={{ paddingTop:120, paddingBottom:80, position:"relative" }}>
+        <div style={{ maxWidth:1200, margin:"0 auto", padding:"0 5%", display:"grid", gridTemplateColumns:"1fr 1fr", gap:80, alignItems:"center" }}>
+          <div>
+            <Reveal>
+              <div style={{ fontFamily:"'Fira Code',monospace", fontSize:".9rem", color:C.cyan, marginBottom:12, letterSpacing:".15em", textTransform:"uppercase" }}>Hi, I'm Esra</div>
+              <h1 style={{ fontFamily:"'Space Grotesk',sans-serif", fontSize:"clamp(3rem,6vw,5rem)", fontWeight:800, marginBottom:24, lineHeight:1.1 }}>
+                AI Engineer &<br />
+                <span style={{ background:`linear-gradient(90deg,${C.violet},${C.pink},${C.cyan})`, WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>Problem Solver</span>
+              </h1>
+              <p style={{ fontSize:"1.2rem", color:C.muted, marginBottom:40, lineHeight:1.6 }}>
+                I craft intelligent systems using cutting-edge AI technologies. From LangChain-powered applications to computer vision solutions,
+                I transform complex problems into elegant, scalable solutions.
+              </p>
+              <div style={{ display:"flex", gap:16, flexWrap:"wrap" }}>
+                <button onClick={() => scrollTo("projects")} style={{
+                  background:`linear-gradient(135deg,${C.violet},${C.pink})`, color:C.white, border:"none", padding:"16px 32px",
+                  borderRadius:12, fontFamily:"'Space Grotesk',sans-serif", fontSize:"1rem", fontWeight:600, cursor:"pointer",
+                  transition:"transform .3s, box-shadow .3s", boxShadow:`0 4px 20px ${C.violet}33`
+                }} onMouseEnter={e => e.currentTarget.style.transform = "translateY(-2px)"}
+                   onMouseLeave={e => e.currentTarget.style.transform = "translateY(0)"}>
+                  View My Work
+                </button>
+                <button onClick={() => scrollTo("contact")} style={{
+                  background:"transparent", color:C.white, border:`2px solid ${C.border}`, padding:"14px 30px",
+                  borderRadius:12, fontFamily:"'Space Grotesk',sans-serif", fontSize:"1rem", fontWeight:600, cursor:"pointer",
+                  transition:"border-color .3s, background .3s"
+                }} onMouseEnter={e => { e.currentTarget.style.borderColor = C.cyan; e.currentTarget.style.background = `${C.cyan}11`; }}
+                   onMouseLeave={e => { e.currentTarget.style.borderColor = C.border; e.currentTarget.style.background = "transparent"; }}>
+                  Get In Touch
+                </button>
+              </div>
+            </Reveal>
+          </div>
+
+          <HeroVisual />
+        </div>
+      </section>
+
+      {/* ── ABOUT ── */}
+      <section id="about" style={{ padding:"80px 0", background:C.surface }}>
+        <div style={{ maxWidth:1200, margin:"0 auto", padding:"0 5%" }}>
+          <SectionHeader tag="about_me.json" color={C.violet} accent={C.cyan} line1="Builder by nature," line2="problem-solver by choice." />
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))", gap:24 }}>
+            {[
+              { icon:"🤖", title:"AI Engineer",        text:"I craft intelligent systems using LangChain, OpenAI, RAG pipelines, and ML frameworks — turning complex AI into tools people actually use.", color:C.violet },
+              { icon:"🏥", title:"Clinic ERP Founder", text:"Built MedDesk from scratch — a desktop clinic management system for appointments, patient records, billing, and full clinic workflows.", color:C.cyan },
+              { icon:"🧭", title:"Startup AI Lead",    text:"At Compass, I lead the AI layer of an employee mental health platform — NLP-driven chatbots, sentiment analysis, and personalized support systems.", color:C.pink },
+              { icon:"🎓", title:"CS Graduate",        text:"Bachelor's degree in Software Engineering and Information Systems. 3 Udemy certifications in AI, ML, and APIs. Self-driven learner who codes more than she sleeps.", color:C.emerald },
+            ].map((item, i) => (
+              <Reveal key={i} delay={i * 90}>
+                <div style={{ background:C.card, border:`1px solid ${C.border}`, borderRadius:14, padding:28, height:"100%", position:"relative", overflow:"hidden", transition:"border-color .3s,box-shadow .3s" }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = item.color; e.currentTarget.style.boxShadow = `0 0 28px ${item.color}18`; }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = C.border; e.currentTarget.style.boxShadow = "none"; }}>
+                  <div style={{ fontSize:"2rem", marginBottom:16 }}>{item.icon}</div>
+                  <h3 style={{ fontFamily:"'Space Grotesk',sans-serif", fontSize:"1.25rem", fontWeight:700, marginBottom:12, color:C.white }}>{item.title}</h3>
+                  <p style={{ color:C.muted, lineHeight:1.6 }}>{item.text}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── SKILLS ── */}
+      <section id="skills" style={{ padding:"80px 0" }}>
+        <div style={{ maxWidth:1200, margin:"0 auto", padding:"0 5%" }}>
+          <SectionHeader tag="skills.py" color={C.pink} accent={C.amber} line1="Tech Stack &" line2="Expertise" />
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))", gap:20 }}>
+            {SKILLS.map((skill, i) => (
+              <Reveal key={i} delay={i * 50}>
+                <div style={{
+                  background:C.card, border:`1px solid ${C.border}`, borderRadius:12, padding:24, textAlign:"center",
+                  transition:"border-color .3s, transform .3s, box-shadow .3s", cursor:"pointer"
+                }}
+                onMouseEnter={e => {
+                  e.currentTarget.style.borderColor = skill.color;
+                  e.currentTarget.style.transform = "translateY(-4px)";
+                  e.currentTarget.style.boxShadow = `0 8px 25px ${skill.color}22`;
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.borderColor = C.border;
+                  e.currentTarget.style.transform = "translateY(0)";
+                  e.currentTarget.style.boxShadow = "none";
+                }}>
+                  <div style={{ fontSize:"2rem", marginBottom:12 }}>{skill.icon}</div>
+                  <div style={{ fontFamily:"'Space Grotesk',sans-serif", fontSize:"1.1rem", fontWeight:600, color:C.white, marginBottom:4 }}>{skill.name}</div>
+                  <div style={{ fontSize:".85rem", color:C.muted }}>{skill.sub}</div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── PROJECTS ── */}
+      <section id="projects" style={{ padding:"80px 0", background:C.surface }}>
+        <div style={{ maxWidth:1200, margin:"0 auto", padding:"0 5%" }}>
+          <SectionHeader tag="projects.js" color={C.cyan} accent={C.emerald} line1="Featured" line2="Projects" />
+          <div style={{ display:"flex", justifyContent:"center", gap:12, marginBottom:40, flexWrap:"wrap" }}>
+            {badgeFilters.map(badge => (
+              <button key={badge} onClick={() => setFilter(badge)} style={{
+                background:filter === badge ? `linear-gradient(135deg,${C.violet},${C.pink})` : "transparent",
+                color:filter === badge ? C.white : C.muted, border:`1px solid ${filter === badge ? 'transparent' : C.border}`,
+                padding:"8px 16px", borderRadius:20, fontFamily:"'Fira Code',monospace", fontSize:".8rem",
+                cursor:"pointer", transition:"all .3s"
+              }}>
+                {badge}
+              </button>
+            ))}
+          </div>
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(350px,1fr))", gap:32 }}>
+            {filtered.map((project, i) => (
+              <Reveal key={i} delay={i * 100}>
+                <div style={{
+                  background:C.card, border:`1px solid ${C.border}`, borderRadius:16, overflow:"hidden",
+                  transition:"border-color .3s, transform .3s, box-shadow .3s", cursor:"pointer", ...project.gradient
+                }}
+                onMouseEnter={e => {
+                  e.currentTarget.style.borderColor = project.glow;
+                  e.currentTarget.style.transform = "translateY(-8px)";
+                  e.currentTarget.style.boxShadow = `0 20px 40px ${project.glow}33`;
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.borderColor = C.border;
+                  e.currentTarget.style.transform = "translateY(0)";
+                  e.currentTarget.style.boxShadow = "none";
+                }}>
+                  <div style={{ padding:32 }}>
+                    <div style={{ fontSize:"2.5rem", marginBottom:20 }}>{project.emoji}</div>
+                    <div style={{ fontFamily:"'Space Grotesk',sans-serif", fontSize:"1.4rem", fontWeight:700, color:C.white, marginBottom:8 }}>{project.title}</div>
+                    <div style={{ fontSize:".85rem", color:C.muted, marginBottom:20, padding:`6px 12px`, background:`${C.bg}66`, borderRadius:12, display:"inline-block" }}>{project.badge}</div>
+                    <p style={{ color:C.muted, lineHeight:1.6 }}>{project.desc}</p>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── CERTIFICATIONS ── */}
+      <section id="certifications" style={{ padding:"80px 0" }}>
+        <div style={{ maxWidth:1200, margin:"0 auto", padding:"0 5%" }}>
+          <SectionHeader tag="certs.json" color={C.amber} accent={C.pink} line1="Certifications &" line2="Learning" />
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(300px,1fr))", gap:24 }}>
+            {CERTS.map((cert, i) => (
+              <Reveal key={i} delay={i * 80}>
+                <div style={{
+                  background:C.card, border:`1px solid ${C.border}`, borderRadius:14, padding:28,
+                  transition:"border-color .3s, transform .3s, box-shadow .3s"
+                }}
+                onMouseEnter={e => {
+                  e.currentTarget.style.borderColor = cert.color;
+                  e.currentTarget.style.transform = "translateY(-4px)";
+                  e.currentTarget.style.boxShadow = `0 12px 30px ${cert.color}22`;
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.borderColor = C.border;
+                  e.currentTarget.style.transform = "translateY(0)";
+                  e.currentTarget.style.boxShadow = "none";
+                }}>
+                  <div style={{ display:"flex", alignItems:"center", gap:16, marginBottom:16 }}>
+                    <div style={{ fontSize:"2rem" }}>{cert.icon}</div>
+                    <div>
+                      <div style={{ fontFamily:"'Space Grotesk',sans-serif", fontSize:"1.1rem", fontWeight:700, color:C.white }}>{cert.title}</div>
+                      <div style={{ fontSize:".85rem", color:cert.color, fontWeight:500 }}>{cert.org}</div>
+                    </div>
+                  </div>
+                  <p style={{ color:C.muted, lineHeight:1.6 }}>{cert.desc}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── CONTACT ── */}
+      <section id="contact" style={{ padding:"80px 0", background:C.surface }}>
+        <div style={{ maxWidth:1200, margin:"0 auto", padding:"0 5%" }}>
+          <SectionHeader tag="contact.sh" color={C.emerald} accent={C.violet} line1="Let's Build" line2="Something Together" />
+          <div style={{ textAlign:"center", maxWidth:600, margin:"0 auto" }}>
+            <p style={{ fontSize:"1.2rem", color:C.muted, marginBottom:40, lineHeight:1.6 }}>
+              I'm always interested in new opportunities and exciting projects.
+              Whether you have a question, a project idea, or just want to connect, feel free to reach out!
+            </p>
+            <div style={{ display:"flex", justifyContent:"center", gap:14, flexWrap:"wrap" }}>
+              {[
+                { label:"GitHub",   href:"https://github.com/esrabelhassen",              icon:"⌨️" },
+                { label:"LinkedIn", href:"https://www.linkedin.com/in/esra-belhassen-7a2480202/",    icon:"💼" },
+              ].map(s => (
+                <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" style={{ textDecoration:"none" }}>
+                  <div style={{
+                    background:`${C.border}88`, border:`1px solid ${C.border}`, borderRadius:10, padding:"14px 24px",
+                    display:"flex", alignItems:"center", gap:10, transition:"all .3s"
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = C.violet; e.currentTarget.style.boxShadow = `0 0 16px ${C.violet}22`; }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = C.border; e.currentTarget.style.boxShadow = "none"; }}>
+                    <span style={{ fontSize:"1.2rem" }}>{s.icon}</span>
+                    <span style={{ fontFamily:"'Space Grotesk',sans-serif", fontSize:".85rem", fontWeight:500, color:C.white }}>{s.label}</span>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── FOOTER ── */}
+      <footer style={{ background:C.bg, borderTop:`1px solid ${C.border}`, padding:"28px 5%", position:"relative", zIndex:1 }}>
+        <div style={{ maxWidth:1200, margin:"0 auto", display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:12 }}>
+          <span style={{ fontFamily:"'Space Grotesk',sans-serif", fontSize:".9rem", fontWeight:700, background:`linear-gradient(90deg,${C.violet},${C.cyan})`, WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>esra.dev</span>
+          <span style={{ fontFamily:"'Fira Code',monospace", fontSize:".73rem", color:C.dimmed }}>© {new Date().getFullYear()} Esra Belhassen · Built with ♥</span>
+          <span style={{ fontFamily:"'Fira Code',monospace", fontSize:".73rem", color:C.dimmed }}>Tunisia 🇹🇳</span>
+        </div>
+      </footer>
     </div>
   );
 }
