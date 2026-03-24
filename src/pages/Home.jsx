@@ -319,38 +319,16 @@ function HeroVisual() {
 
 /* ─── MAIN ────────────────────────────────────────── */
 export default function Home() {
-  const [active, setActive]     = useState("home");
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [filter, setFilter]     = useState("All");
-
-  const navLinks     = ["home", "about", "skills", "projects", "certifications", "contact"];
-  const badgeFilters = ["All", "Founder", "AI Lead", "CV", "ML", "NLP", "Healthcare", "Fintech", "AI"];
-
-  const scrollTo = (id) => { document.getElementById(id)?.scrollIntoView({ behavior:"smooth" }); setMenuOpen(false); };
-
-  useEffect(() => {
-    const handle = () => {
-      const found = navLinks.find(id => {
-        const el = document.getElementById(id);
-        if (!el) return false;
-        const r = el.getBoundingClientRect();
-        return r.top <= 100 && r.bottom > 100;
-      });
-      if (found) setActive(found);
-    };
-    window.addEventListener("scroll", handle);
-    return () => window.removeEventListener("scroll", handle);
-  }, []);
-
-  const filtered = filter === "All" ? PROJECTS : PROJECTS.filter(p => p.badge === filter);
-
   return (
-    <div style={{ background:C.bg, color:C.white, fontFamily:"'Inter','Segoe UI',sans-serif", minHeight:"100vh", overflowX:"hidden", position:"relative" }}>
-      {/* TEMPORARY DEBUG: Add visible content */}
-      <div style={{ background: 'red', color: 'white', padding: '20px', fontSize: '24px', position: 'fixed', top: '10px', left: '10px', zIndex: 9999 }}>
-        DEBUG: React is working! If you see this, the app is mounting.
+    <div style={{ background: 'black', color: 'white', padding: '50px', fontSize: '24px' }}>
+      <h1>TEST: React is working!</h1>
+      <p>If you see this, the portfolio is loading correctly.</p>
+      <div style={{ background: 'red', padding: '20px', margin: '20px 0' }}>
+        This is a test component
       </div>
-      <Particles />
+    </div>
+  );
+}
 
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
