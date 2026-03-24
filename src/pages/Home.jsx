@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
-const PHOTO_URL = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgdmlld0JveD0iMCAwIDE1MCAxNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxNTAiIGhlaWdodD0iMTUwIiBmaWxsPSIjOEI1Q0Y2Ii8+Cjx0ZXh0IHg9Ijc1IiB5PSI4NSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE4IiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+RXNyYTwvdGV4dD4KPC9zdmc+";
+const PHOTO_URL = "";
 
 /* ─── PALETTE ─────────────────────────────────────── */
 const C = {
@@ -40,7 +40,7 @@ function Reveal({ children, delay = 0, style = {} }) {
     <div ref={r} style={{
       opacity: v ? 1 : 0,
       transform: v ? "translateY(0)" : "translateY(28px)",
-      transition: `opacity 0.7s ease ${delay}ms, transform 0.7s ease ${delay}ms`,
+      transition: "opacity 0.7s ease " + delay + "ms, transform 0.7s ease " + delay + "ms",
       ...style,
     }}>
       {children}
@@ -91,13 +91,13 @@ const PROJECTS = [
     emoji: "🏥", title: "MedDesk — Clinic ERP", badge: "Founder",
     desc: "A full-featured desktop ERP system built for medical clinics — appointment scheduling, patient records, billing, and complete clinic workflow automation.",
     github: null, glow: C.violet,
-    gradient: `linear-gradient(135deg,${C.violet}22,${C.pink}22)`,
+    gradient: "linear-gradient(135deg," + C.violet + "22," + C.pink + "22)",
   },
   {
     emoji: "🧭", title: "Compass — Mental Health AI", badge: "AI Lead",
     desc: "Employee mental health platform leveraging AI to deliver personalized emotional support. I own the full AI pipeline — NLP, chatbot intelligence, and recommendation logic.",
     github: null, glow: C.cyan,
-    gradient: `linear-gradient(135deg,${C.cyan}22,${C.emerald}22)`,
+    gradient: "linear-gradient(135deg," + C.cyan + "22," + C.emerald + "22)",
   },
   {
     emoji: "😷", title: "Face Mask Detector", badge: "CV",
@@ -587,41 +587,7 @@ export default function Home() {
   );
 }
 
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
-        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-        ::-webkit-scrollbar{width:5px}
-        ::-webkit-scrollbar-track{background:${C.bg}}
-        ::-webkit-scrollbar-thumb{background:${C.violet};border-radius:3px}
-        @keyframes floatP{0%,100%{transform:translateY(0) scale(1);opacity:.25}50%{transform:translateY(-28px) scale(1.2);opacity:.6}}
-        @keyframes spin-slow{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-        @keyframes gradient-shift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-        @keyframes badge-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-        .nav-lnk{cursor:pointer;font-family:'Space Grotesk',sans-serif;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:${C.muted};transition:color .3s;position:relative;padding:4px 0}
-        .nav-lnk::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:2px;background:linear-gradient(90deg,${C.violet},${C.cyan});transition:width .3s;border-radius:2px}
-        .nav-lnk:hover,.nav-lnk.active{color:${C.white}}
-        .nav-lnk:hover::after,.nav-lnk.active::after{width:100%}
-        .skill-card{transition:transform .3s,box-shadow .3s,border-color .3s}
-        .project-card{transition:transform .35s,box-shadow .35s,border-color .35s}
-        .project-card:hover{transform:translateY(-8px)}
-        .glow-btn{transition:all .3s;cursor:pointer}
-        .glow-btn:hover{transform:translateY(-2px)}
-        .filter-btn{transition:all .25s;cursor:pointer}
-        .filter-btn:hover{transform:translateY(-1px)}
-        .cert-card{transition:transform .3s,border-color .3s,box-shadow .3s}
-        .cert-card:hover{transform:translateY(-5px)}
-        .social-btn{transition:all .3s}
-        .social-btn:hover{transform:translateY(-3px)}
-        @media(max-width:768px){
-          .nav-desktop{display:none!important}
-          .nav-mob{display:flex!important}
-          .hero-flex{flex-direction:column!important;align-items:center!important}
-          .projects-grid{grid-template-columns:1fr!important}
-          .skills-grid{grid-template-columns:repeat(2,1fr)!important}
-          .stats-row{flex-direction:column!important;gap:24px!important}
-          .certs-grid{grid-template-columns:1fr!important}
-        }
-      `}</style>
+
 
       {/* ── NAV ── */}
       <nav style={{ position:"fixed", top:0, left:0, right:0, zIndex:200, background:`${C.bg}D0`, backdropFilter:"blur(18px)", borderBottom:`1px solid ${C.border}`, padding:"0 5%" }}>
