@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
-const PHOTO_URL = "";
+const PHOTO_URL = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgdmlld0JveD0iMCAwIDE1MCAxNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxNTAiIGhlaWdodD0iMTUwIiBmaWxsPSIjOEI1Q0Y2Ii8+Cjx0ZXh0IHg9Ijc1IiB5PSI4NSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE4IiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+RXNyYTwvdGV4dD4KPC9zdmc+";
 
 /* ─── PALETTE ─────────────────────────────────────── */
 const C = {
@@ -40,7 +40,7 @@ function Reveal({ children, delay = 0, style = {} }) {
     <div ref={r} style={{
       opacity: v ? 1 : 0,
       transform: v ? "translateY(0)" : "translateY(28px)",
-      transition: "opacity 0.7s ease " + delay + "ms, transform 0.7s ease " + delay + "ms",
+      transition: `opacity 0.7s ease ${delay}ms, transform 0.7s ease ${delay}ms`,
       ...style,
     }}>
       {children}
@@ -97,7 +97,7 @@ const PROJECTS = [
     emoji: "🧭", title: "Compass — Mental Health AI", badge: "AI Lead",
     desc: "Employee mental health platform leveraging AI to deliver personalized emotional support. I own the full AI pipeline — NLP, chatbot intelligence, and recommendation logic.",
     github: null, glow: C.cyan,
-    gradient: "linear-gradient(135deg," + C.cyan + "22," + C.emerald + "22)",
+    gradient: `linear-gradient(135deg,${C.cyan}22,${C.emerald}22)`,
   },
   {
     emoji: "😷", title: "Face Mask Detector", badge: "CV",

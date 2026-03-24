@@ -2,6 +2,46 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:#0D0D14}
+::-webkit-scrollbar-thumb{background:#8B5CF6;border-radius:3px}
+
+@keyframes floatP{0%,100%{transform:translateY(0) scale(1);opacity:.25}50%{transform:translateY(-28px) scale(1.2);opacity:.6}}
+@keyframes spin-slow{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes gradient-shift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+@keyframes badge-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+
+.nav-lnk{cursor:pointer;font-family:'Space Grotesk',sans-serif;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:#AAAAAA;transition:color .3s;position:relative;padding:4px 0}
+.nav-lnk::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:2px;background:linear-gradient(90deg,#8B5CF6,#06B6D4);transition:width .3s;border-radius:2px}
+.nav-lnk:hover,.nav-lnk.active{color:#FFFFFF}
+.nav-lnk:hover::after,.nav-lnk.active::after{width:100%}
+
+.skill-card{transition:transform .3s,box-shadow .3s,border-color .3s}
+.project-card{transition:transform .35s,box-shadow .35s,border-color .35s}
+.project-card:hover{transform:translateY(-8px)}
+.glow-btn{transition:all .3s;cursor:pointer}
+.glow-btn:hover{transform:translateY(-2px)}
+.filter-btn{transition:all .25s;cursor:pointer}
+.filter-btn:hover{transform:translateY(-1px)}
+.cert-card{transition:transform .3s,border-color .3s,box-shadow .3s}
+.cert-card:hover{transform:translateY(-5px)}
+.social-btn{transition:all .3s}
+.social-btn:hover{transform:translateY(-3px)}
+
+@media(max-width:768px){
+  .nav-desktop{display:none!important}
+  .nav-mob{display:flex!important}
+  .hero-flex{flex-direction:column!important;align-items:center!important}
+  .projects-grid{grid-template-columns:1fr!important}
+  .skills-grid{grid-template-columns:repeat(2,1fr)!important}
+  .stats-row{flex-direction:column!important;gap:24px!important}
+  .certs-grid{grid-template-columns:1fr!important}
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
