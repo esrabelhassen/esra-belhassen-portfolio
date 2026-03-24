@@ -108,7 +108,7 @@ const PROJECTS = [
   {
     emoji: "🩺", title: "Diabetes Classifier", badge: "ML",
     desc: "End-to-end classification pipeline predicting diabetes likelihood from clinical parameters with high accuracy using ensemble methods.",
-    github: "https://github.com/esrabelhassen/Diabetes-Classification", glow: C.emerald,
+    github: "https://github.com/esrabelhassen/Diabetes-Classification-", glow: C.emerald,
     gradient: `linear-gradient(135deg,${C.emerald}22,${C.cyan}22)`,
   },
   {
