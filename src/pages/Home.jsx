@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
-const PHOTO_URL = "https://media.base44.com/images/public/69c1cbfefeffc2ff04c2402b/68ac8358e_1769702893222.jpeg";
+const PHOTO_URL = "https://via.placeholder.com/150x150/8B5CF6/FFFFFF?text=Esra";
 
 /* ─── PALETTE ─────────────────────────────────────── */
 const C = {
