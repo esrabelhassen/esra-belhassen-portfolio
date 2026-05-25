@@ -626,7 +626,7 @@ export default function Home() {
                   onMouseLeave={e => { e.currentTarget.style.borderColor = `${C.violet}33`; e.currentTarget.style.boxShadow = "none"; }}>
                   <div style={{ fontFamily:"'Fira Code',monospace", fontSize:".73rem", color:C.dimmed, marginBottom:6 }}>// reach me at</div>
                   <div style={{ fontFamily:"'Space Grotesk',sans-serif", fontSize:"1.1rem", fontWeight:600, color:C.white }}>
-                   belhassennesra@gmail.com ✉️
+                     belhassennesra@gmail.com ✉️
                   </div>
                 </div>
               </a>
